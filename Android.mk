@@ -11,6 +11,9 @@ LOCAL_PREBUILT_LIBS := \
 	$(LIB_PATH)/libavformat.so \
 	$(LIB_PATH)/libavutil.so \
 	$(LIB_PATH)/libswscale.so \
+	$(LIB_PATH)/libavdevice.so \
+	$(LIB_PATH)/libavfilter.so \
+	$(LIB_PATH)/libpostproc.so \
 	$(LIB_PATH)/libavcodec.so
 
 LOCAL_PREBUILT_EXECUTABLES := \
