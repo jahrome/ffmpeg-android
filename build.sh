@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export NDK=${HOME}/Projet_android/android-ndk-r5
+export NDK=${HOME}/Projet_android/android-ndk-r6b
 export TOOLCHAIN=${HOME}/standalone-toolchain
 #$NDK/build/tools/make-standalone-toolchain.sh --platform=android-9 --install-dir=$TOOLCHAIN
 export PATH=$TOOLCHAIN/bin/:$PATH
@@ -21,5 +21,5 @@ echo $FLAGS --extra-cflags="$EXTRA_CFLAGS" --extra-ldflags="$EXTRA_LDFLAGS" --ex
 ./configure $FLAGS --extra-cflags="$EXTRA_CFLAGS" --extra-ldflags="$EXTRA_LDFLAGS" --extra-libs="$EXTRA_LIBS" | tee build/ffmpeg/configuration.txt
 [ $PIPESTATUS == 0 ] || exit 1
 make clean
-make -j2 || exit 1
+make -j4 || exit 1
 make install || exit 1
