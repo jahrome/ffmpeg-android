@@ -302,7 +302,7 @@ static const char *my_program_dir;
 static const char *config_filename = "/etc/ffserver.conf";
 
 static int ffserver_debug;
-static int ffserver_daemon;
+static int ffserver_daemon_;
 static int no_launch;
 static int need_to_start_children;
 
@@ -4087,7 +4087,7 @@ static int parse_ffconfig(const char *filename)
                 ERROR("%s:%d: Invalid host/IP address: %s\n", arg);
             }
         } else if (!strcasecmp(cmd, "NoDaemon")) {
-            ffserver_daemon = 0;
+            ffserver_daemon_ = 0;
         } else if (!strcasecmp(cmd, "RTSPPort")) {
             get_arg(arg, sizeof(arg), &p);
             val = atoi(arg);
@@ -4660,7 +4660,7 @@ static void handle_child_exit(int sig)
 static void opt_debug(void)
 {
     ffserver_debug = 1;
-    ffserver_daemon = 0;
+    ffserver_daemon_ = 0;
     logfilename[0] = '-';
 }
 
@@ -4690,7 +4690,7 @@ int main(int argc, char **argv)
 
     my_program_name = argv[0];
     my_program_dir = getcwd(0, 0);
-    ffserver_daemon = 1;
+    ffserver_daemon_ = 1;
 
     parse_options(argc, argv, options, NULL);
 
@@ -4724,7 +4724,7 @@ int main(int argc, char **argv)
     compute_bandwidth();
 
     /* put the process in background and detach it from its TTY */
-    if (ffserver_daemon) {
+    if (ffserver_daemon_) {
         int pid;
 
         pid = fork();
@@ -4751,7 +4751,7 @@ int main(int argc, char **argv)
     /* signal init */
     signal(SIGPIPE, SIG_IGN);
 
-    if (ffserver_daemon)
+    if (ffserver_daemon_)
         chdir("/");
 
     if (http_server() < 0) {
